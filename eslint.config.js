@@ -10,8 +10,21 @@ module.exports = defineConfig([
     plugins: {
       "react-native": eslintPluginReactNative,
     },
+    settings: {
+      "import/resolver": {
+        typescript: {
+          alwaysTryTypes: true,
+          project: "./tsconfig.json",
+        },
+        alias: {
+          map: [["@", "./"]],
+          extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+        },
+      },
+    },
     rules: {
       "react-native/no-unused-styles": "error",
+      "import/no-unresolved": "error",
     },
   },
 ]);

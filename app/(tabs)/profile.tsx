@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { theme } from "../theme";
+import { theme } from "@/theme";
 
 export default function Profie() {
   return (
