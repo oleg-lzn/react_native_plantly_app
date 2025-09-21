@@ -8,23 +8,24 @@ module.exports = defineConfig([
   eslintPluginPrettierRecommended,
   {
     plugins: {
-      "react-native": eslintPluginReactNative,
+      "react-native": eslintPluginReactNative
     },
     settings: {
       "import/resolver": {
         typescript: {
           alwaysTryTypes: true,
-          project: "./tsconfig.json",
+          project: "./tsconfig.json"
         },
         alias: {
           map: [["@", "./"]],
-          extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
-        },
-      },
+          extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
+        }
+      }
     },
     rules: {
       "react-native/no-unused-styles": "error",
       "import/no-unresolved": "error",
-    },
-  },
+      "prettier/prettier": ["error", { trailingComma: "none" }]
+    }
+  }
 ]);

@@ -21,7 +21,7 @@ export default function RootLayout() {
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
             <Entypo name="leaf" color={color} size={size} />
-          ),
+          )
         }}
       />
       <Tabs.Screen
@@ -31,7 +31,7 @@ export default function RootLayout() {
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
             <Feather name="user" color={color} size={size} />
-          ),
+          )
         }}
       />
     </Tabs>
