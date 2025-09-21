@@ -1,8 +1,7 @@
 export const theme = {
   colorGreen: "#29b365",
-  colorRed: "#FF0000",
-  colorBlue: "#0000FF",
-  colorYellow: "#FFFF00",
-  colorPurple: "#800080",
+  colorLeafyGreen: "#206a42",
+  colorAppleGreen: "#a0d36c",
+  colorLimeGreen: "#d0e57e",
   colorWhite: "#fff"
 };
