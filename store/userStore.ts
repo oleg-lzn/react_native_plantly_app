@@ -7,6 +7,16 @@ type UserStore = {
   toggleHadOnboarded: () => void;
 };
 
+export type Plant = {
+  name: string;
+  wateringFrequency: string;
+};
+
+type PlantStore = {
+  plants: Plant[];
+  addPlant: (plant: Plant) => void;
+};
+
 export const useUserStore = create(
   persist<UserStore>(
     (set) => ({
@@ -19,6 +29,20 @@ export const useUserStore = create(
     }),
     {
       name: "user-storage",
+      storage: createJSONStorage(() => AsyncStorage)
+    }
+  )
+);
+
+export const usePlantStore = create(
+  persist<PlantStore>(
+    (set) => ({
+      plants: [],
+      addPlant: (plant: Plant) =>
+        set((state) => ({ plants: [...state.plants, plant] }))
+    }),
+    {
+      name: "plant-storage",
       storage: createJSONStorage(() => AsyncStorage)
     }
   )
