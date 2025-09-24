@@ -1,21 +1,14 @@
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import { theme } from "@/theme";
 import { PlantlyImage } from "@/components/PlantlyImage";
 import { PlantlyButton } from "@/components/PlantlyButton";
 import { useState } from "react";
-import { usePlantStore, Plant } from "@/store/userStore";
+import { usePlantStore } from "@/store/plantStore";
 import { useRouter } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function NewScreen() {
-  const [plant, setPlant] = useState<Plant>({
+  const [plant, setPlant] = useState({
     name: "",
     wateringFrequency: ""
   });
@@ -23,6 +16,8 @@ export default function NewScreen() {
   const router = useRouter();
 
   const addNewPlant = usePlantStore((state) => state.addPlant);
+  // const clearPlants = usePlantStore((state) => state.clearPlants);
+
   const handleSubmitPlant = () => {
     if (!plant.name) {
       return Alert.alert("Validation Error", "Give your plant a name");
@@ -45,8 +40,11 @@ export default function NewScreen() {
     addNewPlant(plant);
     Alert.alert(`${plant.name} added`);
     console.log(`Plant added ${plant.name}`);
-    setPlant({ name: "", wateringFrequency: "" });
-    router.back();
+    setPlant({
+      name: "",
+      wateringFrequency: ""
+    });
+    router.navigate("/");
   };
 
   return (
@@ -75,6 +73,7 @@ export default function NewScreen() {
         keyboardType="number-pad"
       />
       <PlantlyButton title="Add Plant" onPress={handleSubmitPlant} />
+      {/* <PlantlyButton title="Clear Plants" onPress={clearPlants} /> */}
     </KeyboardAwareScrollView>
   );
 }

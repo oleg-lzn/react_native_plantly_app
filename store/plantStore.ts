@@ -1,0 +1,51 @@
+import { createJSONStorage, persist } from "zustand/middleware";
+import { create } from "zustand";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export type PlantType = {
+  id: string;
+  name: string;
+  wateringFrequency: string;
+  isWateredAtTimestamp?: number;
+};
+
+type PlantsState = {
+  nextId: number;
+  plants: PlantType[];
+  addPlant: (plant: PlantType) => void;
+  removePlant: (id: string) => void;
+  waterPlant: (id: string) => void;
+  clearPlants: () => void;
+};
+
+export const usePlantStore = create(
+  persist<PlantsState>(
+    (set) => ({
+      nextId: 1,
+      plants: [],
+      addPlant: (plant) =>
+        set((state) => ({
+          nextId: state.nextId + 1,
+          plants: [{ ...plant, id: state.nextId.toString() }, ...state.plants]
+        })),
+
+      removePlant: (id: string) =>
+        set((state) => ({
+          plants: state.plants.filter((plant) => plant.id !== id)
+        })),
+      waterPlant: (id: string) =>
+        set((state) => ({
+          plants: state.plants.map((plant) =>
+            plant.id === id
+              ? { ...plant, lastWateredAtTimestamp: Date.now() }
+              : plant
+          )
+        })),
+      clearPlants: () => set({ plants: [], nextId: 0 })
+    }),
+    {
+      name: "plant-storage",
+      storage: createJSONStorage(() => AsyncStorage)
+    }
+  )
+);
