@@ -1,4 +1,11 @@
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
 import { theme } from "@/theme";
 import { PlantlyImage } from "@/components/PlantlyImage";
 import { PlantlyButton } from "@/components/PlantlyButton";
@@ -6,12 +13,15 @@ import { useState } from "react";
 import { usePlantStore } from "@/store/plantStore";
 import { useRouter } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as ImagePicker from "expo-image-picker";
 
 export default function NewScreen() {
   const [plant, setPlant] = useState({
     name: "",
     wateringFrequency: ""
   });
+
+  const [imageUri, setImageUri] = useState<string>();
 
   const router = useRouter();
 
@@ -37,14 +47,37 @@ export default function NewScreen() {
       );
     }
 
-    addNewPlant(plant);
+    addNewPlant(plant, imageUri);
     Alert.alert(`${plant.name} added`);
     console.log(`Plant added ${plant.name}`);
     setPlant({
       name: "",
       wateringFrequency: ""
     });
-    router.navigate("/");
+    router.back();
+  };
+
+  const handleChooseImage = async () => {
+    if (Platform.OS === "web") return;
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      return Alert.alert(
+        "Permission denied",
+        "Please grant permission to access the media library"
+      );
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1
+    });
+
+    if (!result.canceled) {
+      setImageUri(result.assets[0].uri);
+    }
   };
 
   return (
@@ -53,9 +86,13 @@ export default function NewScreen() {
       contentContainerStyle={styles.contentContainer}
       keyboardShouldPersistTaps="handled"
     >
-      <View style={styles.centered}>
-        <PlantlyImage />
-      </View>
+      <TouchableOpacity
+        style={styles.centered}
+        activeOpacity={0.8}
+        onPress={handleChooseImage}
+      >
+        <PlantlyImage imageUri={imageUri} />
+      </TouchableOpacity>
       <Text style={styles.label}> Name</Text>
       <TextInput
         style={styles.input}
@@ -97,7 +134,8 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   centered: {
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: 24
   },
   label: {
     fontSize: 18,

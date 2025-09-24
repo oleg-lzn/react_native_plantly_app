@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, Text } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 import { theme } from "@/theme";
 import { usePlantStore } from "@/store/plantStore";
 import { PlantCard } from "@/components/PlantCard";
@@ -8,13 +8,12 @@ import { useRouter } from "expo-router";
 export default function App() {
   const plants = usePlantStore((state) => state.plants);
   const router = useRouter();
-  console.log(plants);
 
   return (
     <FlatList
       style={styles.container}
       contentContainerStyle={
-        plants.length === 0 ? styles.contentContainer : styles.emptyContainer
+        plants.length === 0 ? styles.emptyContainer : styles.contentContainer
       }
       data={plants}
       ListEmptyComponent={
@@ -36,11 +35,12 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    backgroundColor: theme.colorWhite
+    backgroundColor: theme.colorWhite,
+    justifyContent: "center",
+    alignItems: "center"
   },
   contentContainer: {
     padding: 12,
-    alignItems: "center",
     justifyContent: "center"
   }
 });
