@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { theme } from "@/theme";
 import { usePlantStore } from "@/store/plantStore";
 import { PlantCard } from "@/components/PlantCard";

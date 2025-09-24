@@ -14,7 +14,7 @@ export type PlantType = {
 type PlantsState = {
   nextId: number;
   plants: PlantType[];
-  addPlant: (plant: PlantType, imageUri?: string) => void;
+  addPlant: (plant: PlantType, imageUri?: string) => Promise<void>;
   removePlant: (id: string) => void;
   waterPlant: (id: string) => void;
   clearPlants: () => void;
