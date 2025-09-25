@@ -26,10 +26,11 @@ export const usePlantStore = create(
       nextId: 1,
       plants: [],
       addPlant: async (plant, imageUri?: string) => {
-        const savedImageUri =
-          FileSystem.documentDirectory! +
-          `${new Date().getTime()}-${imageUri?.split("/").slice(-1)[0]}`;
-        if (savedImageUri) {
+        let savedImageUri;
+        if (imageUri) {
+          savedImageUri =
+            FileSystem.documentDirectory! +
+            `${new Date().getTime()}-${imageUri?.split("/").slice(-1)[0]}`;
           await FileSystem.copyAsync({ from: imageUri, to: savedImageUri });
         }
         set((state) => ({
@@ -38,7 +39,7 @@ export const usePlantStore = create(
             {
               ...plant,
               id: state.nextId.toString(),
-              imageUri: imageUri ? savedImageUri : undefined
+              imageUri: savedImageUri ?? plant.imageUri
             },
             ...state.plants
           ]
