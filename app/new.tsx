@@ -26,7 +26,6 @@ export default function NewScreen() {
   const router = useRouter();
 
   const addNewPlant = usePlantStore((state) => state.addPlant);
-  // const clearPlants = usePlantStore((state) => state.clearPlants);
 
   const handleSubmitPlant = () => {
     if (!plant.name) {

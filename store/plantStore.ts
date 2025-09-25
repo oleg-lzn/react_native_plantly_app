@@ -14,7 +14,7 @@ export type PlantType = {
 type PlantsState = {
   nextId: number;
   plants: PlantType[];
-  addPlant: (plant: PlantType, imageUri?: string) => Promise<void>;
+  addPlant: (plant: any, imageUri?: string) => Promise<void>;
   removePlant: (id: string) => void;
   waterPlant: (id: string) => void;
   clearPlants: () => void;
@@ -26,7 +26,7 @@ export const usePlantStore = create(
       nextId: 1,
       plants: [],
       addPlant: async (plant, imageUri?: string) => {
-        let savedImageUri;
+        let savedImageUri: string;
         if (imageUri) {
           savedImageUri =
             FileSystem.documentDirectory! +
