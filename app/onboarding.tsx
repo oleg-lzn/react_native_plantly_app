@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   tagline: {
+    paddingHorizontal: 12,
     fontSize: 24,
     color: theme.colorWhite,
     textAlign: "center"
