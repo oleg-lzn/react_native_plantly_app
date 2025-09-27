@@ -9,6 +9,10 @@ export default function TabsLayout() {
     (state) => state.hasFinishedOnboarding
   );
 
+  const unstable_settings = {
+    initialRouteName: "index"
+  };
+
   if (!hasFinishedOnboarding) {
     return <Redirect href="/onboarding" />;
   }
